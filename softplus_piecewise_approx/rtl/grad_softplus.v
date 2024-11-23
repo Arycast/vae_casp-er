@@ -33,7 +33,7 @@ module grad_softplus (
 		  7'hfe   	: outneg = 16'h0003; 		// -2
 		  7'hfd   	: outneg = 16'h0008; 		// -3
 		  7'hfc   	: outneg = 16'h0014; 		// -4
-		  7'bhfb   	: outneg = 16'h002a; 		// -5
+		  7'hfb   	: outneg = 16'h002a; 		// -5
 		  default  	: outneg = 16'h0000; 		// Default
 		endcase
 		
