@@ -27,42 +27,85 @@ module tb_sigmoid;
         gradient = 0;
         offset = 0;
 
-        // Test case 1: Positive input close to zero
-        x = 16'h0001;     // 1/256, which is a small positive number
-        gradient = 16'h0002; // 2/256, also a small positive number
-        offset = 16'h0000; // 0
+        // Test case 1: 
+        x = 16'h0000;     // 0
+        gradient = 16'h003B; // 0.23106
+        offset = 16'h0080; // 0.5
         #10; // Wait for 10 time units
         $display("Test Case 1 - x: %h, gradient: %h, offset: %h, alfa: %h", x, gradient, offset, alfa);
 
-        // Test case 2: Moderate positive inputs
-        x = 16'h000C;     // 12/256 = 0.046875
-        gradient = 16'h0004; // 4/256 = 0.015625
-        offset = 16'h0001; // 1/256
+        // Test case 2: 
+        x = 16'h0100;     // 1
+        gradient = 16'h0026; // 0.14794
+        offset = 16'h0090; // 0.56125
         #10;
         $display("Test Case 2 - x: %h, gradient: %h, offset: %h, alfa: %h", x, gradient, offset, alfa);
 
-        // Test case 3: Zero input
-        x = 16'h0000;     // 0
-        gradient = 16'h0000; // 0
-        offset = 16'h0000; // 0
+        // Test case 3: 
+        x = 16'h0200;     // 2
+        gradient = 16'h0012; // 0.07177
+        offset = 16'h00BD; // 0.73725
         #10;
         $display("Test Case 3 - x: %h, gradient: %h, offset: %h, alfa: %h", x, gradient, offset, alfa);
 
-        // Test case 4: Large positive values
-        x = 16'h007F;     // 127/256 ~ 0.49609375 (close to 0.5)
-        gradient = 16'h0002; // 2/256
-        offset = 16'h0001; // 1/256
+        // Test case 4: 
+        x = 16'h0300;     // 3
+        gradient = 16'h0008; // 0.029439
+        offset = 16'h00DD; // 0.864253
         #10;
         $display("Test Case 4 - x: %h, gradient: %h, offset: %h, alfa: %h", x, gradient, offset, alfa);
 
-        // Test case 5: Large negative values
-        x = 16'hFF80;     // -128/256 = -0.5
-        gradient = 16'hFFFE; // -2/256
-        offset = 16'hFFFF; // -1/256
+        // Test case 5: 
+        x = 16'h0400;     // 4
+        gradient = 16'h0003; // 0.011293
+        offset = 16'h00F0; // 0.936841
         #10;
         $display("Test Case 5 - x: %h, gradient: %h, offset: %h, alfa: %h", x, gradient, offset, alfa);
-
-        // Finish simulation
+		
+		// Test case 6: 
+        x = 16'h0500;     // 5
+        gradient = 16'h0001; // 0.00422
+        offset = 16'h00F9; // 0.973307
+        #10;
+        $display("Test Case 6 - x: %h, gradient: %h, offset: %h, alfa: %h", x, gradient, offset, alfa);
+        
+		// Test case 7: 
+        x = 16'hFFFF;     // -1
+        gradient = 16'h0026; // 0.14794
+        offset = 16'h0090; // 0.56125
+        #10;
+        $display("Test Case 7 - x: %h, gradient: %h, offset: %h, alfa: %h", x, gradient, offset, alfa);
+		
+		// Test case 8: 
+        x = 16'hFFFE;     // -2
+        gradient = 16'h0012; // 0.07177
+        offset = 16'h00BD; // 0.73725
+        #10;
+        $display("Test Case 8 - x: %h, gradient: %h, offset: %h, alfa: %h", x, gradient, offset, alfa);
+		
+		// Test case 9: 
+        x = 16'hFFFD;     // -3
+        gradient = 16'h0008; // 0.029439
+        offset = 16'h00DD; // 0.864253
+        #10;
+        $display("Test Case 9 - x: %h, gradient: %h, offset: %h, alfa: %h", x, gradient, offset, alfa);
+		
+		// Test case 10: 
+        x = 16'hFFFC;     // -4
+        gradient = 16'h0003; // 0.011293
+        offset = 16'h00F0; // 0.936841
+        #10;
+        $display("Test Case 10 - x: %h, gradient: %h, offset: %h, alfa: %h", x, gradient, offset, alfa);
+		
+		// Test case 11: 
+        x = 16'hFFFB;     // -5
+        gradient = 16'h0001; // 0.00422
+        offset = 16'h00F9; // 0.973307
+        #10;
+        $display("Test Case 11 - x: %h, gradient: %h, offset: %h, alfa: %h", x, gradient, offset, alfa);
+		
+			
+		// Finish simulation
         $finish;
     end
 
