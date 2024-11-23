@@ -89,8 +89,8 @@ def to_fixed_point(num):
         dec += int(final[i]) * (2**i)
     
     # temp = '0'+result[13:16]
-    print(result[14:17])
-    hexa = bin4_to_hex('0'+result[2:5]) + bin4_to_hex(result[5:9]) + bin4_to_hex(result[10:14]) + bin4_to_hex(result[14:18])
+    # print(result[14:17])
+    hexa = bin4_to_hex(result[0]+result[2:5]) + bin4_to_hex(result[5:9]) + bin4_to_hex(result[10:14]) + bin4_to_hex(result[14:18])
     # hexa = ''
     print(len(result))
     return result,dec,hexa
