@@ -70,6 +70,6 @@ def to_fixed_point(num):
    
    return [result, dec]
 
-num = 1.75
+num = 0.4324532195046169
 res_bin,res_dec = to_fixed_point(num)
 print(res_bin,res_dec)
