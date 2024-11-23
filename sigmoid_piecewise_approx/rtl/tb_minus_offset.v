@@ -1,55 +1,21 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Engineer    : casp-er
-// Design Name : Testbench for Min value from the offset + 2
-// Module Name : tb_minus_offset
+// Design Name : Min value from the offset + 2
+// Module Name : minus_offset
 // Project Name: Variational Autoencoder
 //////////////////////////////////////////////////////////////////////////////////
 
-module tb_minus_offset;
-    // Inputs and outputs
-    reg [15:0] offset;
-    wire [15:0] sum;
+module minus_offset (
+    input [15:0] offset,      // 16-bit signed fixed-point input
+    output [15:0] sum    // 16-bit signed fixed-point sum
+);
+	wire [15:0] min_offset ;
+	assign min_offset = ~offset;
+	
+	// Add 1 (in integer) just like in the formula, and add 1 in LSB for 2's complement
+    localparam constant_value = 16'b0000_0001_0000_0001; 
 
-    // Instantiate the Unit Under Test (UUT)
-    minus_offset uut (
-        .offset(offset),
-        .sum(sum)
-    );
+    // Perform signed addition (a + 2)
+    assign sum = min_offset + constant_value;
 
-    // Stimulus
-    initial begin
-        // Test case 1: Positive number
-        offset = 16'b0000_0000_0000_0101;  // 5
-        #10;
-        $display("Offset: %d, Sum: %d", $signed(offset), $signed(sum));
-
-        // Test case 2: Negative number
-        offset = 16'b1111_1111_1111_1011;  // -5
-        #10;
-        $display("Offset: %d, Sum: %d", $signed(offset), $signed(sum));
-
-        // Test case 3: Zero
-        offset = 16'b0000_0000_0000_0000;  // 0
-        #10;
-        $display("Offset: %d, Sum: %d", $signed(offset), $signed(sum));
-
-        // Test case 4: Large positive number
-        offset = 16'b0111_1111_1111_1111;  // Max positive
-        #10;
-        $display("Offset: %d, Sum: %d", $signed(offset), $signed(sum));
-
-        // Test case 5: Large negative number
-        offset = 16'b1000_0000_0000_0000;  // Min negative
-        #10;
-        $display("Offset: %d, Sum: %d", $signed(offset), $signed(sum));
-
-        // Finish simulation
-        $finish;
-    end
-
-    // Optional: Waveform dump for ModelSim/QuestaSim
-    initial begin
-        $dumpfile("minus_offset_tb.vcd");
-        $dumpvars(0, tb_minus_offset);
-    end
 endmodule
