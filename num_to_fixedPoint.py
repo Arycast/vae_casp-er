@@ -95,6 +95,6 @@ def to_fixed_point(num):
     print(len(result))
     return result,dec,hexa
 
-num = 0.01321880513712285
+num = 0.21692
 res_bin,res_dec,res_hex = to_fixed_point(num)
 print(res_bin,res_dec,res_hex)
