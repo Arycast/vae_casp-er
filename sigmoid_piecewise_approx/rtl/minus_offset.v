@@ -11,10 +11,11 @@ module minus_offset (
 );
 	wire [15:0] min_offset ;
 	assign min_offset = ~offset;
-
-    localparam constant_value = 16'b0000_0000_0000_0010; // Constant value of 2
+	
+	// Add 1 (in integer) just like in the formula, and add 1 in LSB for 2's complement
+    localparam constant_value = 16'b0000_0001_0000_0001; 
 
     // Perform signed addition (a + 2)
-    assign sum = min_offset + constant_value;
+    assign sum = min_offset + constant_value; // Negate and add 1.0
 
 endmodule
