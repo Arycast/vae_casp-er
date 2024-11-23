@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module tb_sigmoid_2;
+module tb_sigmoid;
     // Parameters
     parameter BITS = 16;
 
@@ -110,6 +110,6 @@ module tb_sigmoid_2;
     // Optional: Waveform dump for ModelSim/QuestaSim
     initial begin
         $dumpfile("sigmoid_tb_2.vcd");
-        $dumpvars(0, tb_sigmoid_2);
+        $dumpvars(0, tb_sigmoid);
     end
 endmodule

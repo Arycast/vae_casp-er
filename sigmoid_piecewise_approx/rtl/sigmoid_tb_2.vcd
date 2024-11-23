@@ -1,5 +1,5 @@
 $date
-	Sat Nov 23 17:35:59 2024
+	Sat Nov 23 20:11:48 2024
 $end
 $version
 	Icarus Verilog
@@ -7,7 +7,7 @@ $end
 $timescale
 	1ps
 $end
-$scope module tb_sigmoid_2 $end
+$scope module tb_sigmoid $end
 $var wire 16 ! gradient [15:0] $end
 $var wire 16 " offset [15:0] $end
 $var wire 16 # alfa [15:0] $end
