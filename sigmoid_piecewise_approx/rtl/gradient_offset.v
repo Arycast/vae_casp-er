@@ -47,8 +47,8 @@ reg [15:0] temp_offset;
 always @(*) begin //offset
 case (select)
     4'b0000  : temp_offset = 16'h0080;
-    4'b0001  : temp_offset = 16'h0093;
-    4'b0010  : temp_offset = 16'h00BD;
+    4'b0001  : temp_offset = 16'h0097;
+    4'b0010  : temp_offset = 16'h00BF;
     4'b0011  : temp_offset = 16'h00DD;
     4'b0100  : temp_offset = 16'h00F0;
     4'b0101  : temp_offset = 16'h00F9;    
