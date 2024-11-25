@@ -5,9 +5,9 @@
 // Project Name: Variational Autoencoder
 //////////////////////////////////////////////////////////////////////////////////
 
-`include "mult.v"
-`include "grad_softplus.v"
-`include "off_softplus.v"
+// `include "mult.v"
+// `include "grad_softplus.v"
+// `include "off_softplus.v"
 module softplus (
    input [15:0] operand, 
    output [15:0] out
