@@ -22,9 +22,9 @@ module off_softplus (
 		  8'h00   	: outpos = 16'h004d; 		// 0
 		  8'h01  	: outpos = 16'h0037; 		// 1
 		  8'h02   	: outpos = 16'h001f; 		// 2
-		  8'h03   	: outpos = 16'h000f; 		// 3
-		  8'h04   	: outpos = 16'h0007; 		// 4
-		  default  	: outpos = 16'h004d; 		// Default
+		  8'h03   	: outpos = 16'h0010; 		// 3
+		  8'h04   	: outpos = 16'h000b; 		// 4
+		  default  	: outpos = 16'h0009; 		// Default
 		endcase
 		
 		case(x)
