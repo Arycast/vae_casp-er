@@ -1,4 +1,11 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Engineer    : casp-er
+// Design Name : Multiplier Fixed Point
+// Module Name : maclyr1
+// Project Name: Variational Autoencoder
+//////////////////////////////////////////////////////////////////////////////////
 `include "mult.v"
+
 module maclyr1(
     //input  wire clk,          // Clock
     input  wire [15:0] d1,		// Data 1
@@ -26,12 +33,23 @@ module maclyr1(
     wire [15:0] mul1;
 	wire [15:0] mul2;
 	wire [15:0] mul3;
-	wire [15:0] mul1;
-	wire [15:0] mul2;
-	wire [15:0] mul3;
-	wire [15:0] mul1;
-	wire [15:0] mul2;
-	wire [15:0] mul3;
+	wire [15:0] mul4;
+	wire [15:0] mul5;
+	wire [15:0] mul6;
+	wire [15:0] mul7;
+	wire [15:0] mul8;
+	wire [15:0] mul9;
+	
+	// Tree adder result
+	wire [15:0] s1;
+	wire [15:0] s2;
+	wire [15:0] s3;
+	wire [15:0] s4;
+	wire [15:0] s5;
+	wire [15:0] s6;
+	wire [15:0] s7;
+	
+	// Module multiplier
     mult mult1
 		(
 			.Operand_1(d1),
@@ -86,5 +104,14 @@ module maclyr1(
 			.Operand_2(w9),
 			.result(mul9)
 		);
-	res = mul1 + mul2 + mul3 + mul4 + mul5 + mul6 + mul7 + mul8 + mul9 + b;
+	
+	// Tree adder
+	assign s1 = mul1 + mul2;
+	assign s2 = mul3 + mul4;
+	assign s3 = mul5 + mul6;
+	assign s4 = mul7 + mul8;
+	assign s5 = mul9 + b;
+	assign s6 = s1 + s2;
+	assign s7 = s3 + s4;
+	assign res = s5 + s6 + s7;
 endmodule

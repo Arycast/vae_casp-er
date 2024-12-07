@@ -1,6 +1,12 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Engineer    : casp-er
+// Design Name : Multiplier Fixed Point
+// Module Name : maclyr2
+// Project Name: Variational Autoencoder
+//////////////////////////////////////////////////////////////////////////////////
 `include "mult.v"
-`include "sigmoid.v"
-module lyr2(
+
+module maclyr2(
     //input  wire clk,          // Clock
     input  wire [15:0] d1,		// Data 1
 	input  wire [15:0] d2,		// Data 2
@@ -12,7 +18,7 @@ module lyr2(
 	// Multiplier result
     wire [15:0] mul1;
 	wire [15:0] mul2;
-	wire [15:0] sumres;
+
     mult mult1
 		(
 			.Operand_1(d1),
@@ -25,10 +31,5 @@ module lyr2(
 			.Operand_2(w2),
 			.result(mul2)
 		);
-	sumres = mul1 + mul2 + b;
-	sigmoid sigmoid1
-		(
-			.x(sumres);
-			.alfa(res)
-		);
+	assign res = mul1 + mul2 + b;
 endmodule
