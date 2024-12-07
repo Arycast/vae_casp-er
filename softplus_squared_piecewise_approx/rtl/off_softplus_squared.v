@@ -19,21 +19,26 @@ module off_softplus_squared (
 
 	always @ (*) begin
 		case(x)
-		  8'h00   	: outpos = 16'h004d; 		// 0
-		  8'h01  	: outpos = 16'h0037; 		// 1
-		  8'h02   	: outpos = 16'h0020; 		// 2
-		  8'h03   	: outpos = 16'h0014; 		// 3
-		  8'h04   	: outpos = 16'h000b; 		// 4
-		  default  	: outpos = 16'h0009; 		// Default
+		  8'h00   	: outpos = 16'h008c; 		// > 0
+		  8'h01   	: outpos = 16'h008d; 		// > 1
+		  8'h02   	: outpos = 16'h0095; 		// > 2
+		  8'h03   	: outpos = 16'h00a4; 		// > 3
+		  8'h04   	: outpos = 16'h00b8; 		// > 4
+		  8'h05		: outpos = 16'h00c6;		// > 5
+		  8'h06		: outpos = 16'h00d7;		// > 6
+		  default  	: outpos = 16'h00e7; 		// Default (> 7)
 		endcase
 		
 		case(x)
-		  8'hff   	: outneg = 16'h004c; 		// -1
-		  8'hfe   	: outneg = 16'h0037; 		// -2
-		  8'hfd   	: outneg = 16'h001f; 		// -3
-		  8'hfc   	: outneg = 16'h000f; 		// -4
-		  8'hfb   	: outneg = 16'h0007; 		// -5
-		  default  	: outneg = 16'h0002; 		// Default
+		  8'hff   	: outneg = 16'h008c; 		// > -1
+		  8'hfe   	: outneg = 16'h0081; 		// > -2
+		  8'hfd   	: outneg = 16'h006a; 		// > -3
+		  8'hfc   	: outneg = 16'h0050; 		// > -4
+		  8'hfb   	: outneg = 16'h003a; 		// > -5
+		  8'hfa		: outneg = 16'h0028;		// > -6
+		  8'hf9		: outneg = 16'h0019;		// > -7
+		  8'hf8  	: outneg = 16'h0013; 		// > -8
+		  default	: outneg = 16'h0000;		// Default (< -8)
 		endcase
 		
 		case(sign)

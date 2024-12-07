@@ -20,21 +20,26 @@ module grad_softplus_squared (
 
 	always @ (*) begin
 		case(x)
-		  8'h00   	: outpos = 16'h0044; 		// 0
-		  8'h01   	: outpos = 16'h005a; 		// 1
-		  8'h02   	: outpos = 16'h0066; 		// 2
-		  8'h03   	: outpos = 16'h006b; 		// 3
-		  8'h04   	: outpos = 16'h006d; 		// 4
-		  default  	: outpos = 16'h006e; 		// Default
+		  8'h00   	: outpos = 16'h0035; 		// > 0
+		  8'h01   	: outpos = 16'h0035; 		// > 1
+		  8'h02   	: outpos = 16'h0031; 		// > 2
+		  8'h03   	: outpos = 16'h002c; 		// > 3
+		  8'h04   	: outpos = 16'h0027; 		// > 4
+		  8'h05		: outpos = 16'h0024;		// > 5
+		  8'h06		: outpos = 16'h0021;		// > 6
+		  default  	: outpos = 16'h001f; 		// Default (> 7)
 		endcase
 		
 		case(x)
-		  8'hfb   	: outneg = 16'h0001; 		// -1
-		  8'hfc   	: outneg = 16'h0003; 		// -2
-		  8'hfd   	: outneg = 16'h0008; 		// -3
-		  8'hfe   	: outneg = 16'h0014; 		// -4
-		  8'hff   	: outneg = 16'h002a; 		// -5
-		  default  	: outneg = 16'h0000; 		// Default
+		  8'hff   	: outneg = 16'h002e; 		// > -1
+		  8'hfe   	: outneg = 16'h0022; 		// > -2
+		  8'hfd   	: outneg = 16'h0017; 		// > -3
+		  8'hfc   	: outneg = 16'h000e; 		// > -4
+		  8'hfb   	: outneg = 16'h0009; 		// > -5
+		  8'hfa		: outneg = 16'h0005;		// > -6
+		  8'hf9		: outneg = 16'h0003;		// > -7
+		  8'hf8  	: outneg = 16'h0002; 		// > -8
+		  default	: outneg = 16'h0000;		// (< -8)
 		endcase
 		
 		case(sign)
