@@ -1,3 +1,17 @@
+
+// `include "grad_softplus_squared.v"
+// `include "gradient_offset.v"
+// `include "maclyr1.v"
+// `include "maclyr2.v"
+// `include "minus_offset.v"
+// `include "mult.v"
+// `include "off_softplus_squared.v"
+// `include "sigmoid.v"
+// `include "softplus_squared.v"
+// `include "top_level_forward.v"
+// `include "XORShift_RNG.v"
+
+
 module top_level_forward (
     input clk,rst,
     input [15:0] x1,x2,x3,x4,x5,x6,x7,x8,x9, //dari 1 ya increment input nya
@@ -32,6 +46,16 @@ module top_level_forward (
 
     wire [15:0] a21;
     wire [15:0] a22;
+
+    wire [15:0] macout1;
+    wire [15:0] macout2;
+    wire [15:0] macout3;
+    wire [15:0] macout4;
+    wire [15:0] macout5;
+    wire [15:0] macout6;
+    wire [15:0] macout7;
+    wire [15:0] macout8;
+    wire [15:0] macout9;
 
 
     maclyr1 macc1
@@ -74,11 +98,11 @@ module top_level_forward (
 
     XOR_RNG random1
     (
-        .clk(clk),.rst(rst),.rand(rand1_out);
+        .clk(clk),.rst(rst),.rand(rand1_out)
     );
     XOR_RNG random2
     (
-        .clk(clk),.rst(rst),.rand(rand2_out);
+        .clk(clk),.rst(rst),.rand(rand2_out)
     );
 
     mult mult_sp_e1
@@ -100,66 +124,112 @@ module top_level_forward (
 
     maclyr2 macoutput1
     (
-        .d1(a21),d2(a22),
+        .d1(a21),.d2(a22),
         .w1(w11),.w2(w12),
         .b(b31),
-        .res(out1)
+        .res(macout1)
     );
     maclyr2 macoutput2
     (
-        .d1(a21),d2(a22),
+        .d1(a21),.d2(a22),
         .w1(w21),.w2(w22),
         .b(b32),
-        .res(out2)
+        .res(macout2)
     );
     maclyr2 macoutput3
     (
-        .d1(a21),d2(a22),
+        .d1(a21),.d2(a22),
         .w1(w31),.w2(w32),
         .b(b33),
-        .res(out3)
+        .res(macout3)
     );
     maclyr2 macoutput4
     (
-        .d1(a21),d2(a22),
+        .d1(a21),.d2(a22),
         .w1(w41),.w2(w42),
         .b(b34),
-        .res(out4)
+        .res(macout4)
     );
     maclyr2 macoutput5
     (
-        .d1(a21),d2(a22),
+        .d1(a21),.d2(a22),
         .w1(w51),.w2(w52),
         .b(b35),
-        .res(out5)
+        .res(macout5)
     );
     maclyr2 macoutput6
     (
-        .d1(a21),d2(a22),
+        .d1(a21),.d2(a22),
         .w1(w61),.w2(w62),
         .b(b36),
-        .res(out6)
+        .res(macout6)
     );
     maclyr2 macoutput7
     (
-        .d1(a21),d2(a22),
+        .d1(a21),.d2(a22),
         .w1(w71),.w2(w72),
         .b(b37),
-        .res(out7)
+        .res(macout7)
     );
     maclyr2 macoutput8
     (
-        .d1(a21),d2(a22),
+        .d1(a21),.d2(a22),
         .w1(w81),.w2(w82),
         .b(b38),
-        .res(out8)
+        .res(macout8)
     );
     maclyr2 macoutput9
     (
-        .d1(a21),d2(a22),
+        .d1(a21),.d2(a22),
         .w1(w91),.w2(w92),
         .b(b39),
-        .res(out9)
+        .res(macout9)
     );
+
+    sigmoid sigmoidout1
+    (
+        .x(macout1), .alfa(out1)
+    );
+
+    sigmoid sigmoidout2
+    (
+        .x(macout2), .alfa(out2)
+    );
+
+    sigmoid sigmoidout3
+    (
+        .x(macout3), .alfa(out3)
+    );
+
+    sigmoid sigmoidout4
+    (
+        .x(macout4), .alfa(out4)
+    );
+
+    sigmoid sigmoidout5
+    (
+        .x(macout5), .alfa(out5)
+    );
+
+    sigmoid sigmoidout6
+    (
+        .x(macout6), .alfa(out6)
+    );
+
+    sigmoid sigmoidout7
+    (
+        .x(macout7), .alfa(out7)
+    );
+
+    sigmoid sigmoidout8
+    (
+        .x(macout8), .alfa(out8)
+    );
+
+    sigmoid sigmoidout9
+    (
+        .x(macout9), .alfa(out9)
+    );
+
 // =========== end of layer 3 ==========    
 endmodule
