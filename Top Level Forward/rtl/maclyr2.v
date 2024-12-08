@@ -4,7 +4,7 @@
 // Module Name : maclyr2
 // Project Name: Variational Autoencoder
 //////////////////////////////////////////////////////////////////////////////////
-`include "mult.v"
+// `include "mult.v"
 
 module maclyr2(
     //input  wire clk,          // Clock
