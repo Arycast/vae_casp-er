@@ -51,12 +51,12 @@ module softplus_squared_tb ();
 		// #2 $fwriteb(fd, x); $fwriteb(fd," "); $fwriteb(fd,alfa); $fwriteb(fd," "); $fdisplayh(fd,alfa);
 
 		fd = $fopen("result_softplus_squared.txt","w");
-		for (i=16'hf800; i <= 16'hffff; i=i+1) begin
+		for (i=16'h8000; i <= 16'hffff; i=i+1) begin
 			x = i;
 			#2 $fwriteb(fd, x); $fwriteb(fd," "); $fwriteb(fd,alfa); $fwriteb(fd," "); $fdisplayh(fd,alfa);
 		end
 
-		for (i=16'h0000; i <= 16'h0800; i=i+1) begin
+		for (i=16'h0000; i <= 16'h7fff; i=i+1) begin
 			x = i;
 			#2 $fwriteb(fd, x); $fwriteb(fd," "); $fwriteb(fd,alfa); $fwriteb(fd," "); $fdisplayh(fd,alfa);
 		end
