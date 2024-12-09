@@ -29,6 +29,7 @@ module axis_forward (
 	// State machine
 	reg [2:0] state_reg, state_next;
 	reg [5:0] cnt_word_reg, cnt_word_next;
+	reg [7:0] cnt_stream_data_reg, cnt_stream_data_next;
 
 	// MM2S FIFO    
 	wire [8:0] mm2s_data_count;
@@ -37,7 +38,7 @@ module axis_forward (
 	wire [63:0] mm2s_data;
 
 	// forward_vae
-	parameter MEM_DEPTH_FROM_DMA = 20;	// Depth of memory dump from DMA
+	parameter MEM_DEPTH_FROM_DMA = 21;	// Depth of memory dump from DMA
 	parameter MEM_DEPTH_TO_DMA 	 = 11;	// Depth of memory dump from DMA
 	parameter ADDR_WIDTH		 = 5;
 	parameter ADDR_WIDTH_OUT	 = 4;
@@ -126,12 +127,14 @@ module axis_forward (
             state_reg <= 0;
             mm2s_ready_reg <= 0;
             cnt_word_reg <= 0;
+			cnt_stream_data_reg <= 0;
         end
         else
         begin
             state_reg <= state_next;
             mm2s_ready_reg <= mm2s_ready_next;
             cnt_word_reg <= cnt_word_next;
+			cnt_stream_data_reg <= cnt_stream_data_next;
         end
     end
     
@@ -140,40 +143,51 @@ module axis_forward (
 		state_next = state_reg;
 		mm2s_ready_next = mm2s_ready_reg;
 		cnt_word_next = cnt_word_reg;
+		cnt_stream_data_next = cnt_stream_data_reg;
 		case (state_reg)
-			0: // Wait until data from MM2S is ready (7 words)
+			0: // Wait until data from MM2S is ready
 			begin
-					if (start_from_mm2s)
-					begin
-						state_next = 1;
-						mm2s_ready_next = 1; // Tell the MM2S FIFO that it is ready to accept data
-					end
+					// if (start_from_mm2s)
+					// begin
+					// 	state_next = 1;
+					// 	mm2s_ready_next = 1; // Tell the MM2S FIFO that it is ready to accept data
+					// end
+					if (s_axis_tvalid == 1'b1) state_next = 1;
 			end
-			1: // Write data to input forward vae
-			begin
-				if (cnt_word_reg == (MEM_DEPTH_FROM_DMA-1)) begin
+			1: begin
+				if (s_axis_tvalid == 1'b0) begin
 					state_next = 2;
-					cnt_word_next = 0;
+					mm2s_ready_next = 1; // Tell the MM2S FIFO that it is ready to accept data
 				end
+				cnt_stream_data_next = cnt_stream_data_reg + 1;
+			end
+			2: // Write data to input forward vae
+			begin
+				if (cnt_word_reg == cnt_stream_data_reg) begin
+					state_next = 3;
+					cnt_word_next = 0;
+					cnt_stream_data_next = 0;
+				end
+
 				else cnt_word_next = cnt_word_reg + 1;
 			end
-			2: // Start the forward VAE
+			3: // Start the forward VAE
 			begin
 				// if (cnt_word_reg == (9)) begin
 				// 	state_next = 3;
 				// 	cnt_word_next = 0;
 				// end
 				// else cnt_word_next = cnt_word_reg + 1;
-				state_next = 3;
+				state_next = 4;
 			end
-			3: // Wait until NN computation done and S2MM FIFO is ready to accept data
+			4: // Wait until VAE computation done and S2MM FIFO is ready to accept data
 			begin
 				if (finish && s2mm_ready)
 				begin
-					state_next = 4;
+					state_next = 5;
 				end
 			end
-			4: // Read data output from BRAM of the NN
+			5: // Read data output from memory of the VAE
 			begin
 				if (cnt_word_reg == (MEM_DEPTH_TO_DMA-1))
 				begin
@@ -199,20 +213,20 @@ module axis_forward (
 	assign din = mm2s_data;
 	
 	// Start reading input
-	assign start = (state_reg == 1) ? 1'b1 : 1'b0;
+	assign start = (state_reg == 2) ? 1'b1 : 1'b0;
 
 	// Start forward VAE calculation
-	assign rd_en = (state_reg == 3) ? 1'b1 : 1'b0;
+	assign rd_en = (state_reg == 4) ? 1'b1 : 1'b0;
 	
 	// Control data output port buffer
-	assign en_out = (state_reg == 4) ? 1'b1 : 1'b0;
+	assign en_out = (state_reg == 5) ? 1'b1 : 1'b0;
 	assign out_addr = cnt_word_reg;           
 
 	// Control S2MM FIFO
 	assign s2mm_data = dout;
 	assign s2mm_valid = en_out;
 	register #(1) reg_s2mm_valid(aclk, aresetn, 1'b1, 1'b0, s2mm_valid, s2mm_valid_reg); 
-	assign s2mm_last = ((state_reg == 4) && (out_addr == (MEM_DEPTH_TO_DMA-1))) ? 1 : 0;
+	assign s2mm_last = ((state_reg == 5) && (out_addr == (MEM_DEPTH_TO_DMA-1))) ? 1 : 0;
 	register #(1) reg_s2mm_last(aclk, aresetn, 1'b1, 1'b0, s2mm_last, s2mm_last_reg);
 
 	forward_vae #(
@@ -234,6 +248,21 @@ module axis_forward (
 		.rd_en(rd_en)
 		// .rd_finish(rd_finish)
 	);
+
+	// buffer #(
+	// 	.MEM_DEPTH(MEM_DEPTH_FROM_DMA),
+	// 	.ADDR_WIDTH(ADDR_WIDTH)
+	// ) buff (
+	// 	.clk(aclk),
+	// 	.rst_n(aresetn),
+	// 	.start(start),
+	// 	.finish(finish),
+	// 	.en_out(en_out),
+	// 	.in_addr(in_addr),
+	// 	.out_addr(out_addr),
+	// 	.din(din),
+	// 	.dout(dout)
+	// );
 
 	// *** S2MM FIFO ************************************************************
 	// xpm_fifo_axis: AXI Stream FIFO

@@ -25,7 +25,8 @@ module forward_vae #(
     // Buffer in
     // wire rd_en;     // To output data stored in buffer in
     wire rd_finish;  // Read stream data finish
-    wire [63:0] rd_data [MEM_DEPTH_IN-1:0];
+    reg [63:0] rd_data [MEM_DEPTH_IN-1:0];
+    reg [ADDR_WIDTH_IN-1:0] write_count;
 
     // Forward VAE
     wire [15:0] x1, x2, x3, x4, x5, x6, x7, x8, x9;
@@ -47,39 +48,57 @@ module forward_vae #(
     wire [15:0] out1,out2,out3,out4,out5,out6,out7,out8,out9;
 
     // Buffer out
-    wire [63:0] ready_out1,ready_out2,ready_out3;
-    wire [63:0] wire_dout;
+    reg [63:0] out_data [2:0];
 
     // Control
-    reg [3:0] counter;
-    always @(posedge clk ) begin
-        if (~rst_n) begin
-            counter <= 0;
-        end
-        else if (rd_finish) begin
-            if (counter < 20) counter <= counter + 1;
-        end
 
-        if (counter == 6) finish <= 1;
-    end
-    
     always @(posedge clk) begin
-        dout <= wire_dout;
+        if (~rst_n) begin
+            // Reset the module
+            finish <= 0;
+            dout <= 0;
+            write_count <= 0;
+        end else if (start) begin
+            // Write data to memory when start is high
+			rd_data[in_addr] <= din;
+
+            if (write_count < (MEM_DEPTH_IN-1)) begin
+                write_count <= write_count + 1;
+            end
+
+            rd_data[MEM_DEPTH_IN-1] <= 0;
+        end
+
+        out_data[0][15:0]  <= out1; out_data[1][15:0]  <= out5;
+        out_data[0][31:16] <= out2; out_data[1][31:16] <= out6;
+        out_data[0][47:32] <= out3; out_data[1][47:32] <= out7;
+        out_data[0][63:48] <= out4; out_data[1][63:48] <= out8; 
+
+        out_data[2][15:0]  <= out9;
+        out_data[2][31:16] <= 16'h000;
+        out_data[2][47:32] <= 16'h000;
+        out_data[2][63:48] <= 16'h000;
+
+        if (en_out) begin
+			dout <= out_data[out_addr];
+        end
+
+
+		if (write_count == (MEM_DEPTH_IN-1)) finish <= 1; // Buffer is full and read is complete
+
     end
 
-    buffer_in #(
-        .MEM_DEPTH (MEM_DEPTH_IN),
-        .ADDR_WIDTH (ADDR_WIDTH_IN)
-    ) buff_in (
-        .clk (clk), .rst_n(rst_n), .start(start), .en_out(rd_en),
-        .in_addr(in_addr), .din(din),
-        .finish(rd_finish),
-        .out0(rd_data[0]),.out1(rd_data[1]),.out2(rd_data[2]),.out3(rd_data[3]),.out4(rd_data[4]),
-        .out5(rd_data[5]),.out6(rd_data[6]),.out7(rd_data[7]),.out8(rd_data[8]),.out9(rd_data[9]),
-        .out10(rd_data[10]),.out11(rd_data[11]),.out12(rd_data[12]),.out13(rd_data[13]),.out14(rd_data[14]),
-        .out15(rd_data[15]),.out16(rd_data[16]),.out17(rd_data[17]),.out18(rd_data[18]),.out19(rd_data[19])
-//        .out20(rd_data[20])
-    ); 
+    // always @(posedge clk) begin
+    //     out_data[0][15:0]  <= out1; out_data[1][15:0]  <= out5;
+    //     out_data[0][31:16] <= out2; out_data[1][31:16] <= out6;
+    //     out_data[0][47:32] <= out3; out_data[1][47:32] <= out7;
+    //     out_data[0][63:48] <= out4; out_data[1][63:48] <= out8; 
+
+    //     out_data[2][15:0]  <= out9;
+    //     out_data[2][31:16] <= 16'h000;
+    //     out_data[2][47:32] <= 16'h000;
+    //     out_data[2][63:48] <= 16'h000;
+    // end
 
     top_level_forward core_forward (
         .clk(clk),.rst(~rst_n),
@@ -137,18 +156,5 @@ module forward_vae #(
     assign b31 = rd_data[16][63:48]; assign b32 = rd_data[17][15:0]; assign b33 = rd_data[17][31:16]; assign b34 = rd_data[17][47:32];
     assign b35 = rd_data[17][63:48]; assign b36 = rd_data[18][15:0]; assign b37 = rd_data[18][31:16]; assign b38 = rd_data[18][47:32];
     assign b39 = rd_data[18][63:48];
-
-    buffer_out #(
-        .MEM_DEPTH (MEM_DEPTH_OUT),
-        .ADDR_WIDTH (ADDR_WIDTH_OUT)
-    ) buff_out (
-        .clk (clk), .rst_n(rst_n), .en_out(en_out),
-        .out_addr (out_addr),
-        .in1(ready_out1), .in2(ready_out2), .in3(ready_out3),
-        .dout(wire_dout)
-    );
-    assign ready_out1 = {out1,out2,out3,out4};
-    assign ready_out2 = {out5,out6,out7,out8};
-    assign ready_out3 = {out9,16'h0000,16'h0000,16'h0000};
 
 endmodule

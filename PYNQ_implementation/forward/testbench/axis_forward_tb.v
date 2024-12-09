@@ -52,14 +52,12 @@ module axis_forward_tb();
         aresetn = 1;
         #(T*5);
 
-        
+        s_axis_tvalid = 1;
         s_axis_tdata[15:0]  = 16'h0100;
         s_axis_tdata[31:16] = 16'h0000;
         s_axis_tdata[47:32] = 16'h0100;
         s_axis_tdata[63:48] = 16'h0000;
-        #(T/2);
-        s_axis_tvalid = 1;
-        #(T/2);
+        #T;
         
         // x1=16'h0100;
 		// x2=16'h0000;
