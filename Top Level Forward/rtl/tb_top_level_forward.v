@@ -137,9 +137,9 @@ module tb_top_level_forward;
 		b38 = 16'hffcc;
 		b39 = 16'h04ed;
 
-		$dumpfile("top_level_tb.vcd");
+		$dumpfile("wave.vcd");
 		$dumpvars(0, tb_top_level_forward);
-		#800 $stop;   // Stop simulation after 100ns
+		#800 //$stop;   // Stop simulation after 100ns
 		$finish;
     end
 

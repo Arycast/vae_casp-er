@@ -1,0 +1,12 @@
+.\tb_top_level_forward.v
+.\grad_softplus_squared.v
+.\gradient_offset.v
+.\maclyr1.v
+.\maclyr2.v
+.\minus_offset.v
+.\mult.v
+.\off_softplus_squared.v
+.\sigmoid.v
+.\softplus_squared.v
+.\top_level_forward.v
+.\XORShift_RNG.v
