@@ -1,0 +1,8 @@
+#iverilog files
+*.out
+
+#GTKWave files
+*.vcd
+
+#ModelSim files
+*.wlf
