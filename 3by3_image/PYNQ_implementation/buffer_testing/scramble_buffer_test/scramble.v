@@ -1,0 +1,14 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Engineer    : casp-er
+// Design Name : scramble dma dump memory
+// Module Name : scramble
+// Project Name: Variational Autoencoder
+//////////////////////////////////////////////////////////////////////////////////
+
+module moduleName #(parameter WIDTH = 16) (
+    input clk, rst_n, start, en_out,
+    
+);
+    
+endmodule

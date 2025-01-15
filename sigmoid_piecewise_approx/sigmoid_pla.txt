@@ -1,4 +1,0 @@
-testbench\sigmoid_tb.v
-rtl\mult.v
-rtl\gradient_offset.v
-rtl\sigmoid.v

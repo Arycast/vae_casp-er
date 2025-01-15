@@ -1,0 +1,5 @@
+testbench\softplus_squared_tb.v
+rtl\mult.v
+rtl\grad_softplus_squared.v
+rtl\off_softplus_squared.v
+rtl\softplus_squared.v
