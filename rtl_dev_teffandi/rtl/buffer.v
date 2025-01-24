@@ -8,7 +8,7 @@ module buffer(
 
 input wire [15:0] data_in,
 input wire clk,
-input wire rst,
+input wire rst_n,
 
 output reg done,
 output reg [15:0] data_out
@@ -21,7 +21,7 @@ reg [7:0] counter;
 
 always @(posedge clk)
 begin
-if (!rst) begin
+if (rst_n) begin
     temp <= temp + data_in;
 end
 
@@ -33,15 +33,15 @@ end
 
 always @(posedge clk)
 begin
-if (!rst)
+if (rst_n)
 begin
-    if (counter !== 132)
+    if (counter < 136)
     begin 
         counter <= counter+1;
     end
     else begin
         data_out <= temp;
-        done <= 0;
+        done <= 1;
         counter <= 0;
     end
 

@@ -544,7 +544,7 @@ wire [15:0] data_out;
 buffer buffer_0(
 .data_in(channel_0_1_2_3_out),
 .clk(clk),
-.rst(rst),
+.rst_n(rst_n),
 .done(done),
 .data_out(data_out)
 );
