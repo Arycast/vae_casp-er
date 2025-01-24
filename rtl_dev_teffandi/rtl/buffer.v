@@ -38,6 +38,7 @@ begin
     if (counter < 136)
     begin 
         counter <= counter+1;
+        done <= 0;
     end
     else begin
         data_out <= temp;
