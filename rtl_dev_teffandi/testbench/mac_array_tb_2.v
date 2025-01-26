@@ -11,8 +11,11 @@ reg [63:0]DMA_channel_3; // input stream DMA [511:0] secondary_channel_0,
 reg rst_n;
 reg en;
 reg clr;
-reg [15:0] bias;
-wire [15:0]dot_product; 
+reg [15:0] bias_1;
+reg [15:0] bias_2;
+wire [15:0]dot_product_1;
+wire [15:0]dot_product_2; 
+
 reg read_en;
 
 initial begin
@@ -39,11 +42,28 @@ initial begin
 .clk(clk),
 .en(en),
 .clr(clr),
-.bias(bias),
-.dot_product(dot_product),
+.bias(bias_1),
+.dot_product(dot_product_1),
 .read_en(read_en)
 
 );
+
+ MAC_array_var MAC_1(
+
+.DMA_channel_0(DMA_channel_0), // input stream DMA channel 0
+.DMA_channel_1(DMA_channel_1), // input stream DMA channel 1
+.DMA_channel_2(DMA_channel_2), // input stream DMA channel 2
+.DMA_channel_3(DMA_channel_3), // input stream DMA [511:0] secondary_channel_0, 
+.rst_n(rst_n),
+.clk(clk),
+.en(en),
+.clr(clr),
+.bias(bias_2),
+.dot_product(dot_product_2),
+.read_en(read_en)
+
+);
+
 
 
 initial begin
@@ -55,7 +75,8 @@ clr <= 1;
 en <= 1;
 read_en <= 1;
 clr <= 0;
-bias <= 16'h0000;
+bias_1 <= 16'h0000;
+bias_2 <= 16'h0000;
 DMA_channel_0 = 64'b1010101010101010101010101010101010101010101010101010101010101010;
 DMA_channel_1 = 64'b1010101010101010101010101010101010101010101010101010101010101010;
 DMA_channel_2 = 64'b1010101010101010101010101010101010101010101010101010101010101010;

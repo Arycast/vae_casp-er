@@ -5,3 +5,5 @@ rtl_2\PE.v
 rtl_2\mult.v 
 rtl_2\register.v 
 rtl_2\circular_buffer.v
+rtl_2\circular_buffer_var.v
+rtl_2\MAC_array_var.v
