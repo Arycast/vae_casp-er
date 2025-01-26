@@ -21,6 +21,7 @@ input wire clr,
 input wire read_en,
 input wire op_mode,
 
+output wire done,
 output reg [15:0] dot_product
 
 );
@@ -816,21 +817,20 @@ assign channel_0_1_2_3_out = channel_0_1_out_reg + channel_2_3_out_reg;
 
 //entering recursive adding stage
 
-wire done; //unconnected
 wire [15:0] data_out;
 
 buffer buffer_0(
 .data_in(channel_0_1_2_3_out),
 .clk(clk),
 .rst_n(rst_n),
-.done(done),
+.done(done_temp),
 .data_out(data_out)
 );
 
 // adding bias
 always @(posedge clk) begin
 
-if (done) begin
+if (done_temp) begin
  dot_product <= data_out + bias;
 end
 
@@ -839,6 +839,8 @@ else begin
 end
 
 end
+
+assign done = done_temp;
 
 endmodule
 
