@@ -41,7 +41,7 @@ module circular_buffer #(parameter address1=0) (
     // Initialize the buffer from the external file
     initial begin
 
-        $readmemh("mu.txt",temp,0,1023);
+        $readmemh("var.txt",temp,0,1023);
         read_ptr = 0;
     end
 

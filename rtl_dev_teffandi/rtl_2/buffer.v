@@ -35,7 +35,7 @@ always @(posedge clk)
 begin
 if (rst_n)
 begin
-    if (counter < 25)
+    if (counter < 16)
     begin 
         counter <= counter+1;
         done <= 0;
