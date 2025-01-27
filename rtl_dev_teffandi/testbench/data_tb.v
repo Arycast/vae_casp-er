@@ -71,7 +71,7 @@ integer j;
 
 
 initial begin
-file = $fopen("resultbaru.txt", "w");
+file = $fopen("..\\python\\data_tb\\result.txt", "w");
 	for (j = 0; j < 42; j = j + 1) begin
 		rst_n <= 0;
 		read_en <= 0;
