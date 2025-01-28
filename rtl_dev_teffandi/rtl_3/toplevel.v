@@ -80,6 +80,7 @@ wire [15:0] relu_to_mux;
 wire [15:0] mult_to_mux;
 wire [15:0] out_mux_0;
 wire [7:0] temp_rand;
+assign pre_activation = temp_1;
 
 
 endmodule
