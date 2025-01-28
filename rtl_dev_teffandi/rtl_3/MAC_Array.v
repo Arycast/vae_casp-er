@@ -424,14 +424,14 @@ PE   Channel_2_PE_1
     .weight5(secondary_channel_PE_2_1[5]), 
     .weight6(secondary_channel_PE_2_1[6]), 
     .weight7(secondary_channel_PE_2_1[7]),
-    .in0(DMA_channel_1[17:16]), 
-    .in1(DMA_channel_1[19:18]), 
-    .in2(DMA_channel_1[21:20]), 
-    .in3(DMA_channel_1[23:22]), 
-    .in4(DMA_channel_1[25:24]), 
-    .in5(DMA_channel_1[27:26]), 
-    .in6(DMA_channel_1[29:28]), 
-    .in7(DMA_channel_1[31:30]),
+    .in0(DMA_channel_2[17:16]), 
+    .in1(DMA_channel_2[19:18]), 
+    .in2(DMA_channel_2[21:20]), 
+    .in3(DMA_channel_2[23:22]), 
+    .in4(DMA_channel_2[25:24]), 
+    .in5(DMA_channel_2[27:26]), 
+    .in6(DMA_channel_2[29:28]), 
+    .in7(DMA_channel_2[31:30]),
     .out(channel_2_PE_out[1])
 );
 
