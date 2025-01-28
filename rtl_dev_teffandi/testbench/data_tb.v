@@ -15,10 +15,10 @@ reg read_en;
 reg op_mode;
 
 //  Temporary for testing
-reg [63:0] temp1 [335:0]; 
-reg [63:0] temp2 [335:0]; 
-reg [63:0] temp3 [335:0]; 
-reg [63:0] temp4 [335:0]; 
+reg [63:0] temp1 [15:0]; 
+reg [63:0] temp2 [15:0]; 
+reg [63:0] temp3 [15:0]; 
+reg [63:0] temp4 [15:0]; 
 
 // Result hold
 reg [15:0] resmu;
@@ -59,10 +59,10 @@ toplevel top_0(
 );
 
 initial begin
-	$readmemb("input1.txt",temp1, 0, 335);
-	$readmemb("input2.txt",temp2, 0, 335);
-	$readmemb("input3.txt",temp3, 0, 335);
-	$readmemb("input4.txt",temp4, 0, 335);
+	$readmemb("input_bad1.txt",temp1, 0, 15);
+	$readmemb("input_bad2.txt",temp2, 0, 15);
+	$readmemb("input_bad3.txt",temp3, 0, 15);
+	$readmemb("input_bad4.txt",temp4, 0, 15);
 end
 
 
@@ -72,7 +72,13 @@ integer j;
 
 initial begin
 file = $fopen("..\\python\\data_tb\\result.txt", "w");
-	for (j = 0; j < 42; j = j + 1) begin
+#5;
+rst_n <= 0;
+read_en <= 0;
+en <= 0;
+clr <= 1;
+#10; 
+	for (j = 0; j < 2; j = j + 1) begin
 		rst_n <= 0;
 		read_en <= 0;
 		en <= 0;
@@ -82,8 +88,8 @@ file = $fopen("..\\python\\data_tb\\result.txt", "w");
 		op_mode <= 0;
 		read_en <= 1;
 		clr <= 0;
-		bias <= 16'hfc9c;
-
+		bias <= 16'hf580;
+		#10;
 			for (i = 0; i < 8; i = i + 1) begin
 			DMA_channel_0 = temp1[i+(j*8)];
 			DMA_channel_1 = temp2[i+(j*8)];
@@ -107,8 +113,8 @@ file = $fopen("..\\python\\data_tb\\result.txt", "w");
 		op_mode <= 1;
 		read_en <= 1;
 		clr <= 0;
-		bias <= 16'hFFF2;
-
+		bias <= 16'hffee;
+		#10
 			for (i = 0; i < 8; i = i + 1) begin
 			DMA_channel_0 = temp1[i+(j*8)];
 			DMA_channel_1 = temp2[i+(j*8)];

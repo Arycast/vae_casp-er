@@ -39,23 +39,23 @@ module PE
     register layer_input_6 (.clk(clk), .rst_n(rst_n), .en(en), .clr(clr), .d({7'b0000000,in6,7'b0000000}), .q(in_reg6));
     register layer_input_7 (.clk(clk), .rst_n(rst_n), .en(en), .clr(clr), .d({7'b0000000,in7,7'b0000000}), .q(in_reg7));
 
-    register layer_weight_0 (.clk(clk), .rst_n(rst_n), .en(en), .clr(clr), .d(weight0), .q(weight_reg0));
+    /* register layer_weight_0 (.clk(clk), .rst_n(rst_n), .en(en), .clr(clr), .d(weight0), .q(weight_reg0));
     register layer_weight_1 (.clk(clk), .rst_n(rst_n), .en(en), .clr(clr), .d(weight1), .q(weight_reg1));
     register layer_weight_2 (.clk(clk), .rst_n(rst_n), .en(en), .clr(clr), .d(weight2), .q(weight_reg2));
     register layer_weight_3 (.clk(clk), .rst_n(rst_n), .en(en), .clr(clr), .d(weight3), .q(weight_reg3));
     register layer_weight_4 (.clk(clk), .rst_n(rst_n), .en(en), .clr(clr), .d(weight4), .q(weight_reg4));
     register layer_weight_5 (.clk(clk), .rst_n(rst_n), .en(en), .clr(clr), .d(weight5), .q(weight_reg5));
     register layer_weight_6 (.clk(clk), .rst_n(rst_n), .en(en), .clr(clr), .d(weight6), .q(weight_reg6));
-    register layer_weight_7 (.clk(clk), .rst_n(rst_n), .en(en), .clr(clr), .d(weight7), .q(weight_reg7));
+    register layer_weight_7 (.clk(clk), .rst_n(rst_n), .en(en), .clr(clr), .d(weight7), .q(weight_reg7)); */
 
-    mult mult_0(.Operand_1(in_reg0),.Operand_2(weight_reg0),.result(s01));
-    mult mult_1(.Operand_1(in_reg1),.Operand_2(weight_reg1),.result(s02));
-    mult mult_2(.Operand_1(in_reg2),.Operand_2(weight_reg2),.result(s03));
-    mult mult_3(.Operand_1(in_reg3),.Operand_2(weight_reg3),.result(s04));
-    mult mult_4(.Operand_1(in_reg4),.Operand_2(weight_reg4),.result(s05));
-    mult mult_5(.Operand_1(in_reg5),.Operand_2(weight_reg5),.result(s06));
-    mult mult_6(.Operand_1(in_reg6),.Operand_2(weight_reg6),.result(s07));
-    mult mult_7(.Operand_1(in_reg7),.Operand_2(weight_reg7),.result(s08));
+    mult mult_0(.Operand_1(in_reg0),.Operand_2(weight0),.result(s01));
+    mult mult_1(.Operand_1(in_reg1),.Operand_2(weight1),.result(s02));
+    mult mult_2(.Operand_1(in_reg2),.Operand_2(weight2),.result(s03));
+    mult mult_3(.Operand_1(in_reg3),.Operand_2(weight3),.result(s04));
+    mult mult_4(.Operand_1(in_reg4),.Operand_2(weight4),.result(s05));
+    mult mult_5(.Operand_1(in_reg5),.Operand_2(weight5),.result(s06));
+    mult mult_6(.Operand_1(in_reg6),.Operand_2(weight6),.result(s07));
+    mult mult_7(.Operand_1(in_reg7),.Operand_2(weight7),.result(s08));
 
 
     // Registers before the first summation (Layer 1)
