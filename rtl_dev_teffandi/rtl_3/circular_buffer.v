@@ -39,25 +39,8 @@ module circular_buffer #(parameter address1=0) (
         $readmemh("var.txt",temp_2,0,1023);
 
         read_ptr = 0;
-    end
-
-    initial begin 
-
-     for (i = 0; i < 8; i = i + 1) begin
-         for (j = 0; j <8; j = j + 1) begin
-            buffer[i][j] = temp[offset+8*i+j];
-         end
-     end
-
-    for (i = 0; i < 8; i = i + 1) begin
-         for (j = 0; j <8; j = j + 1) begin
-            buffer_2[i][j] = temp_2[offset+8*i+j];
-         end
-     end
-
-    end
     
-    
+  end
     // Read data from the buffer
 
 
@@ -81,26 +64,26 @@ module circular_buffer #(parameter address1=0) (
             end
             if (!op_mode ) begin
 
-                    read_data_1 <= buffer[0][read_ptr];
-                    read_data_2 <= buffer[1][read_ptr];
-                    read_data_3 <= buffer[2][read_ptr];
-                    read_data_4 <= buffer[3][read_ptr];
-                    read_data_5 <= buffer[4][read_ptr];
-                    read_data_6 <= buffer[5][read_ptr];
-                    read_data_7 <= buffer[6][read_ptr];
-                    read_data_8 <= buffer[7][read_ptr];
+                    read_data_1 <= temp[offset+read_ptr];
+                    read_data_2 <= temp[offset+8+read_ptr];
+                    read_data_3 <= temp[offset+16+read_ptr];
+                    read_data_4 <= temp[offset+24+read_ptr];
+                    read_data_5 <= temp[offset+32+read_ptr];
+                    read_data_6 <= temp[offset+40+read_ptr];
+                    read_data_7 <= temp[offset+48+read_ptr];
+                    read_data_8 <= temp[offset+56+read_ptr];
 
                 end
 
                 else begin
-                    read_data_1 <= buffer_2[0][read_ptr];
-                    read_data_2 <= buffer_2[1][read_ptr];
-                    read_data_3 <= buffer_2[2][read_ptr];
-                    read_data_4 <= buffer_2[3][read_ptr];
-                    read_data_5 <= buffer_2[4][read_ptr];
-                    read_data_6 <= buffer_2[5][read_ptr];
-                    read_data_7 <= buffer_2[6][read_ptr];
-                    read_data_8 <= buffer_2[7][read_ptr];
+                    read_data_1 <= temp_2[offset+read_ptr];
+                    read_data_2 <= temp_2[offset+8+read_ptr];
+                    read_data_3 <= temp_2[offset+16+read_ptr];
+                    read_data_4 <= temp_2[offset+24+read_ptr];
+                    read_data_5 <= temp_2[offset+32+read_ptr];
+                    read_data_6 <= temp_2[offset+40+read_ptr];
+                    read_data_7 <= temp_2[offset+48+read_ptr];
+                    read_data_8 <= temp_2[offset+56+read_ptr];
                 
                 end
         end
