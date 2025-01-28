@@ -62,9 +62,19 @@ module circular_buffer #(parameter address1=0) (
 
 
     // Update read pointer on clock edge
-    always @(posedge clk or posedge rst or op_mode) begin
+    always @(posedge clk) begin
         if (rst) begin
             read_ptr <= 0;
+
+            read_data_1 <= 0;
+            read_data_2 <= 0;
+            read_data_3 <= 0;
+            read_data_4 <= 0;
+            read_data_5 <= 0;
+            read_data_6 <= 0;
+            read_data_7 <= 0;
+            read_data_8 <= 0;
+
         end else begin
             if (read_en) begin
                 read_ptr <= (read_ptr + 1) % SIZE;
