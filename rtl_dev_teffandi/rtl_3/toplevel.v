@@ -53,7 +53,7 @@ mux_2_1 mux_1 (
    .input_1(out_mux_0), 
    .input_2(mult_to_mux),
    .select(op_mode),
-   .out(pre_activation)
+   .out(result)
 ); 
 
 
