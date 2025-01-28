@@ -6,6 +6,7 @@ input wire [63:0] DMA_channel_2, // input stream DMA channel 2
 input wire [63:0] DMA_channel_3, // input stream DMA channel 3
 
 input wire [15:0] bias, // input bias from cache
+output wire [15:0] pre_activation,
 
 input wire clk,
 input wire rst_n,
@@ -13,6 +14,7 @@ input wire en,
 input wire clr,
 input wire read_en,
 input wire op_mode,
+
 output done,
 
 output [15:0] result

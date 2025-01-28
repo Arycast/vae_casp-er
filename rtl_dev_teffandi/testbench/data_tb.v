@@ -24,8 +24,13 @@ reg [63:0] temp4 [15:0];
 reg [15:0] resmu;
 reg [15:0] resvar;
 
+// Dot Product
+wire [15:0] pre_activation;
+reg [15:0] mu_preactivation;
+reg [15:0] var_preactivation;
+
 // Result
-integer file;
+integer file,file_pre_activation;
 
 initial begin
     clk = 0;
@@ -54,7 +59,8 @@ toplevel top_0(
 .clr(clr),
 .read_en(read_en),
 .op_mode(op_mode),
-.result(result)
+.result(result),
+.pre_activation(pre_activation)
 
 );
 
@@ -72,6 +78,7 @@ integer j;
 
 initial begin
 file = $fopen("..\\python\\data_tb\\result.txt", "w");
+file_pre_activation = $fopen("..\\python\\data_tb\\pre-activation_result.txt", "w");
 #5;
 rst_n <= 0;
 read_en <= 0;
@@ -102,6 +109,7 @@ clr <= 1;
 		wait (!done);
 		#5;
 		resmu = result;
+		mu_preactivation = pre_activation;
 		// $display("%h", resmu);
 		#5;
 		rst_n <= 0;
@@ -127,13 +135,16 @@ clr <= 1;
 		wait (!done);
 		#5;
 		resvar = result;
+		var_preactivation = pre_activation;
 		// $display("%h", resvar);
 		$display("%h", resmu+resvar);
 		$fwrite(file, "%h\n", resmu+resvar);
+		$fwrite(file_pre_activation, "%h\n%h\n", mu_preactivation, var_preactivation);
 		#5;
 		
 	end
 	$fclose(file);
+	$fclose(file_pre_activation);
 	$finish;
 end
 
