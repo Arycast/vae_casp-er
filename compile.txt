@@ -1,0 +1,6 @@
+testbench\mac_array_tb.v 
+rtl\MAC_array.v 
+rtl\buffer.v 
+rtl\PE.v 
+rtl\mult.v 
+rtl\register.v 

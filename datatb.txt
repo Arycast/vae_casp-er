@@ -1,0 +1,12 @@
+testbench\data_tb.v 
+rtl\MAC_array.v 
+rtl\buffer.v 
+rtl\PE.v 
+rtl\mult.v 
+rtl\register.v 
+rtl\circular_buffer.v
+rtl\toplevel.v
+rtl\mux_2_1.v
+rtl\ReLu.v
+rtl\XORShift_RNG.v
+
