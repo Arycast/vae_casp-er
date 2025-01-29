@@ -1,19 +1,28 @@
-//////////////////////////////////////////////////////////////////////////////////
-// Engineer    : casp-er
-// Design Name : Register
-// Module Name : register
-// Project Name: Variational Autoencoder
-//////////////////////////////////////////////////////////////////////////////////
+`timescale 1ns / 1ps
 
-module register #(parameter BIT_WIDTH = 16) (
-    input clk, rst_n,
-    input [BIT_WIDTH-1:0] in,
-    output reg [BIT_WIDTH-1:0] out
-);
-
-always @(posedge clk) begin
-    if (!rst_n) out <= 0;
-    else out <= in;
-end
+module register
+    #( 
+        parameter WIDTH = 16
+    )
+    (
+        input wire                    clk,
+        input wire                    rst_n,
+        input wire                    en,
+        input wire                    clr,
+        input wire signed [WIDTH-1:0] d,
+        output reg signed [WIDTH-1:0] q
+    );
+    
+    always @(posedge clk)
+    begin
+        if (!rst_n || clr)
+        begin
+            q <= 0;
+        end
+        else
+        begin
+            q <= d;
+        end
+    end
     
 endmodule
