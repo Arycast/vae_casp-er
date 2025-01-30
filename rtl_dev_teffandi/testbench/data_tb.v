@@ -15,10 +15,10 @@ reg read_en;
 reg op_mode;
 
 //  Temporary for testing
-reg [63:0] temp1 [335:0]; 
-reg [63:0] temp2 [335:0]; 
-reg [63:0] temp3 [335:0]; 
-reg [63:0] temp4 [335:0]; 
+reg [63:0] temp1 [346015:0]; 
+reg [63:0] temp2 [346015:0]; 
+reg [63:0] temp3 [346015:0]; 
+reg [63:0] temp4 [346015:0]; 
 
 // Result hold
 reg [15:0] resmu;
@@ -38,11 +38,11 @@ initial begin
 end
 
 
-initial begin 
+/* initial begin 
 		$dumpfile("wave.vcd");
 		$dumpvars(0, toplevel_tb);
     end
-
+ */
 
 toplevel top_0(
 
@@ -65,10 +65,10 @@ toplevel top_0(
 );
 
 initial begin
-	$readmemb("input1.txt",temp1, 0, 335);
-	$readmemb("input2.txt",temp2, 0, 335);
-	$readmemb("input3.txt",temp3, 0, 335);
-	$readmemb("input4.txt",temp4, 0, 335);
+	$readmemb("input1.txt",temp1, 0, 346015);
+	$readmemb("input2.txt",temp2, 0, 346015);
+	$readmemb("input3.txt",temp3, 0, 346015);
+	$readmemb("input4.txt",temp4, 0, 346015);
 end
 
 
@@ -85,7 +85,7 @@ read_en <= 0;
 en <= 0;
 clr <= 1;
 #10; 
-	for (j = 0; j < 42; j = j + 1) begin
+	for (j = 0; j < 43252; j = j + 1) begin
 		rst_n <= 0;
 		read_en <= 0;
 		en <= 0;
@@ -95,7 +95,7 @@ clr <= 1;
 		op_mode <= 0;
 		read_en <= 1;
 		clr <= 0;
-		bias <= 16'hf57f;
+		bias <= 16'h0018;
 		#10;
 			for (i = 0; i < 8; i = i + 1) begin
 			DMA_channel_0 = temp1[i+(j*8)];
@@ -110,7 +110,7 @@ clr <= 1;
 		#5;
 		resmu = result;
 		mu_preactivation = pre_activation;
-		$display("%h", mu_preactivation);
+		// $display("%h", mu_preactivation);
 		// $display("%h", resmu);
 		#5;
 		rst_n <= 0;
@@ -122,7 +122,7 @@ clr <= 1;
 		op_mode <= 1;
 		read_en <= 1;
 		clr <= 0;
-		bias <= 16'hffef;
+		bias <= 16'hffff;
 		#10
 			for (i = 0; i < 8; i = i + 1) begin
 			DMA_channel_0 = temp1[i+(j*8)];
@@ -139,7 +139,8 @@ clr <= 1;
 		var_preactivation = pre_activation;
 		// $display("%h", resvar);
 		// $display("%h", resmu+resvar);
-		$display("%h", var_preactivation);
+		// $display("%h", var_preactivation);
+		$display("%0d", j);
 		$fwrite(file, "%h\n", resmu+resvar);
 		$fwrite(file_pre_activation, "%h\n%h\n", mu_preactivation, var_preactivation);
 		#5;
